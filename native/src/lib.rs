@@ -59,6 +59,7 @@ impl Player {
                             });
                         match self.device.start() {
                             Ok(_) => {
+                                self.status.reset();
                                 self.play();
                                 true
                             }
