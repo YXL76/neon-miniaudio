@@ -54,7 +54,10 @@ impl Player {
                         self.device
                             .set_data_callback(move |_device, output, _frames| unsafe {
                                 if PLAYING {
-                                    decoder.read_pcm_frames(output);
+                                    let frames = decoder.read_pcm_frames(output);
+                                    if frames == 0 {
+                                        PLAYING = false;
+                                    }
                                 }
                             });
                         match self.device.start() {
@@ -74,23 +77,17 @@ impl Player {
     }
 
     pub fn play(&mut self) {
-        unsafe {
-            PLAYING = true;
-        }
+        unsafe { PLAYING = true }
         self.status.play()
     }
 
     pub fn pause(&mut self) {
-        unsafe {
-            PLAYING = false;
-        }
+        unsafe { PLAYING = false }
         self.status.stop()
     }
 
     pub fn stop(&mut self) {
-        unsafe {
-            PLAYING = false;
-        }
+        unsafe { PLAYING = false }
         self.device.stop().unwrap_or(());
         self.status.reset();
     }
@@ -114,7 +111,7 @@ impl Player {
     }
 
     pub fn empty(&self) -> bool {
-        !self.device.is_started()
+        unsafe { !PLAYING }
     }
 
     pub fn position(&self) -> u128 {
