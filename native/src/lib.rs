@@ -110,8 +110,13 @@ impl Player {
         }
     }
 
-    pub fn empty(&self) -> bool {
-        unsafe { !PLAYING }
+    pub fn empty(&mut self) -> bool {
+        unsafe {
+            if !PLAYING {
+                self.status.stop();
+            }
+            !PLAYING
+        }
     }
 
     pub fn position(&self) -> u128 {
@@ -210,9 +215,9 @@ declare_types! {
 
         method empty(mut cx) {
             let res = {
-                let this = cx.this();
+                let mut this = cx.this();
                 let guard = cx.lock();
-                let player = this.borrow(&guard);
+                let mut player = this.borrow_mut(&guard);
                 player.empty()
             };
             Ok(cx.boolean(res).upcast())
