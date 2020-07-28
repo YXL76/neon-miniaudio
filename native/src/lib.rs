@@ -76,9 +76,15 @@ impl Player {
         }
     }
 
-    pub fn play(&mut self) {
-        unsafe { PLAYING = true }
-        self.status.play()
+    pub fn play(&mut self) -> bool {
+        match self.status {
+            Status::Stopped(_) => {
+                unsafe { PLAYING = true }
+                self.status.play();
+                true
+            }
+            _ => false,
+        }
     }
 
     pub fn pause(&mut self) {
@@ -151,13 +157,7 @@ declare_types! {
                 let mut this = cx.this();
                 let guard = cx.lock();
                 let mut player = this.borrow_mut(&guard);
-                match player.empty() {
-                    false => {
-                        player.play();
-                        true
-                    }
-                    _ => false
-                }
+                player.play()
             };
             Ok(cx.boolean(res).upcast())
         }
