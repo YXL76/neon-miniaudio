@@ -1,0 +1,32 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    name: Test on ${{ matrix.os }}
+    steps:
+      - name: Installing needed Ubuntu dependencies
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libasound2-dev
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          override: true
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12"
+      - run: npm install --global neon-cli
+      - run: neon build --release
