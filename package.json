@@ -1,7 +1,7 @@
 {
   "name": "neon-miniaudio",
   "version": "0.1.0",
-  "description": "",
+  "description": "Miniaudio for Node.js",
   "main": "lib/index.js",
   "author": "YXL <chenxin.lan.76@gmail.com>",
   "license": "MIT",
