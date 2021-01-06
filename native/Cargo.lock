@@ -17,7 +17,7 @@ checksum = "f4d49b80beb70d76cdac92f5681e666f9a697c737c4f4117a67229a0386dc736"
 dependencies = [
  "bitflags",
  "cexpr",
- "cfg-if",
+ "cfg-if 0.1.10",
  "clang-sys",
  "lazy_static",
  "lazycell",
@@ -55,6 +55,12 @@ name = "cfg-if"
 version = "0.1.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4785bdd1c96b2a846b2bd7cc02e86b6b3dbf14e7e53446c4f54c92a361040822"
+
+[[package]]
+name = "cfg-if"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 
 [[package]]
 name = "clang-sys"
@@ -137,14 +143,15 @@ dependencies = [
 
 [[package]]
 name = "neon"
-version = "0.4.0"
+version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6cac4691701b686e6c07b2eb5b51a9f26f5c11179c5d7924b78100dd387fc99d"
+checksum = "a171c5739a277a667669678475165bdbaec1769010e167706c365fd2f98d4f39"
 dependencies = [
  "cslice",
- "neon-build",
+ "neon-build 0.7.0",
  "neon-runtime",
  "semver",
+ "smallvec",
 ]
 
 [[package]]
@@ -153,7 +160,15 @@ version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f9ed332afd4711b84f4f83d334428a1fd9ce53620b62b87595934297c5ede2ed"
 dependencies = [
- "cfg-if",
+ "cfg-if 0.1.10",
+]
+
+[[package]]
+name = "neon-build"
+version = "0.7.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "69c4ddb734e07eeb082b1db7e94b47efd385a3672229ca758a2e2c128263db7f"
+dependencies = [
  "neon-sys",
 ]
 
@@ -163,24 +178,25 @@ version = "0.1.0"
 dependencies = [
  "miniaudio",
  "neon",
- "neon-build",
+ "neon-build 0.4.0",
 ]
 
 [[package]]
 name = "neon-runtime"
-version = "0.4.0"
+version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2beea093a60c08463f65e1da4cda68149986f60d8d2177489b44589463c782a6"
+checksum = "e4c2ae6cb6d5f5a546f5f43dc0318ae90c237b8c0fd30364e299abb7e5cda913"
 dependencies = [
- "cfg-if",
+ "cfg-if 1.0.0",
  "neon-sys",
+ "smallvec",
 ]
 
 [[package]]
 name = "neon-sys"
-version = "0.4.0"
+version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "69a6c1ba6b926746f4d3f596de18ce49d062d78fd9f35f636080232aa77a0e16"
+checksum = "f054b2f3b77e6d686792521c0fd8dd5b3a5fee17a08e951de908b8bd799ec115"
 dependencies = [
  "cc",
  "regex",
@@ -264,6 +280,12 @@ name = "shlex"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7fdf1b9db47230893d76faad238fd6097fd6d6a9245cd7a4d90dbd639536bbd2"
+
+[[package]]
+name = "smallvec"
+version = "1.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1a55ca5f3b68e41c979bf8c46a6f1da892ca4db8f94023ce0bd32407573b1ac0"
 
 [[package]]
 name = "thread_local"
