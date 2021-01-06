@@ -6,7 +6,7 @@
   "author": "YXL <chenxin.lan.76@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "neon-cli": "^0.4.0"
+    "neon-cli": "^0.7.0"
   },
   "scripts": {
     "install": "neon build --release"
