@@ -1,6 +1,6 @@
 {
   "name": "neon-miniaudio",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "description": "Miniaudio for Node.js. Music play library",
   "main": "lib/index.js",
   "types": "index.d.ts",
