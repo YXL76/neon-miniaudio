@@ -12,11 +12,15 @@ name = "neon_miniaudio"
 crate-type = ["cdylib"]
 
 [build-dependencies]
-neon-build = "0.4.0"
+neon-build = "0.7.0"
 
 [dependencies]
-neon = "0.4.0"
 miniaudio = "0.10.0"
+
+[dependencies.neon]
+version = "0.7.0"
+default-features = false
+features = ["napi-runtime"]
 
 [profile.release]
 lto = true

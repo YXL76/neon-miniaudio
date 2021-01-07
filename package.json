@@ -3,12 +3,14 @@
   "version": "0.1.2",
   "description": "Miniaudio for Node.js",
   "main": "lib/index.js",
+  "types": "index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YXL76/neon-miniaudio"
+  },
   "author": "YXL <chenxin.lan.76@gmail.com>",
   "license": "MIT",
-  "dependencies": {
-    "neon-cli": "^0.4.0"
-  },
   "scripts": {
-    "install": "neon build --release"
+    "install": "cargo build --release"
   }
 }
