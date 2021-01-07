@@ -11,34 +11,24 @@ jobs:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
 
-    name: Build for ${{ matrix.os }}
+    name: Build on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
 
     steps:
       - name: Install LLVM (Windows)
         if: matrix.os == 'windows-latest'
         run: choco install llvm
+
       - name: Installing needed Ubuntu dependencies
         if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt-get update
           sudo apt-get install -y libasound2-dev
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: nightly
-          override: true
+
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Install Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: "12"
-      - run: npm install --global neon-cli
-      - run: neon build --release
-      - uses: actions/upload-artifact@v2
-        with:
-          name: ${{ matrix.os }}
-          path: native/index.node
+
+      - run: cargo build --release
 
   Publish:
     needs: build
@@ -48,57 +38,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
       - name: Install Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: "12"
+          node-version: "14"
           registry-url: "https://registry.npmjs.org"
+
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-  Release:
-    needs: build
-    runs-on: ubuntu-latest
-    name: Release
-
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/create-release@v1
-        id: create_release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
-          draft: false
-          prerelease: false
-
-      - uses: actions/download-artifact@v2
-        with:
-          path: ./artifact
-
-      - uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./artifact/macos-latest/index.node
-          asset_name: index-mac.node
-          asset_content_type: application/zip
-      - uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./artifact/ubuntu-latest/index.node
-          asset_name: index-linux.node
-          asset_content_type: application/zip
-      - uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./artifact/windows-latest/index.node
-          asset_name: index-win.node
-          asset_content_type: application/zip
