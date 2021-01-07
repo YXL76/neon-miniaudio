@@ -3,7 +3,7 @@ declare module "neon-miniaudio" {
     isPlaying(): boolean;
     load(url: string): boolean;
     pause(): void;
-    play(): boolean;
+    play(): void;
     volume(level: number): void;
     stop(): void;
   }
